@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Login Page{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-4">
+        {% csrf_token %}
+        {% load crispy_forms_tags %}
+        {% crispy form %} 
+</div>
+    </div>
+{% endblock %}
