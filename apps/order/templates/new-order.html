@@ -1,11 +1,12 @@
-{% extends "base.html" %}
-{% block title %}Login Page{% endblock %}
+{% extends "panel/panel.html" %}
+{% block title %}New Order{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-4">
             {% load crispy_forms_tags %}
             {% crispy form %}
+
             {% block errors %}
                 {% include "errors.html" %}
             {% endblock %}

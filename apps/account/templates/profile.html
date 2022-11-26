@@ -1,0 +1,12 @@
+{% extends "panel/panel.html" %}
+{% block title %}Profile Page{% endblock %}
+
+{% block content %}
+<div class="row-2">
+    <div class="col-4">
+        {% csrf_token %}
+        {% load crispy_forms_tags %}
+        {% crispy form %} 
+    </div>
+</div>
+{% endblock %}

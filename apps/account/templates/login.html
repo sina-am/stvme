@@ -2,11 +2,16 @@
 {% block title %}Login Page{% endblock %}
 
 {% block content %}
-<div class="row">
+<div class="row-2">
     <div class="col-4">
         {% csrf_token %}
         {% load crispy_forms_tags %}
         {% crispy form %} 
-</div>
     </div>
+</div>
+<div class="row-2">
+    <div class="col-4">
+        <a href="{% url 'register' %}"> Don't have an account? </a>
+    </div>
+</div>
 {% endblock %}

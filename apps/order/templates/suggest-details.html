@@ -1,0 +1,55 @@
+{% extends "panel/panel.html" %}
+{% block title %}Suggests{% endblock %}
+
+{% block content %}
+<table class="table">
+    <tbody>
+        <tr>
+            <td> Description </td>
+            <td> {{ object.order.description }} </td>
+        </tr>
+        <tr>
+            <td> Text </td>
+            <td> {{ object.order.text }} </td>
+        </tr>
+        <tr>
+            <td> Deadline </td>
+            <td> {{ object.order.deadline }} </td>
+        </tr>
+        <tr>
+            <td> Specialized Field </td>
+            <td> {{ object.order.specialized_field.name }} </td>
+        </tr>
+        <tr>
+            <td> Ordered For </td>
+            <td> {{ object.order.type }} </td>
+        </tr>
+        <tr>
+            <td> Source Language </td>
+            <td> {{ object.order.source_language.name }} </td>
+        </tr>
+        <tr>
+            <td> Target Language </td>
+            <td> {{ object.order.target_language.name }} </td>
+        </tr>
+        <tr>
+            <td> Price </td>
+            <td> {{ object.price }} </td>
+        </tr>
+        <tr>
+            {% if object.status == "STALING" %}
+                <td>
+                <form action="{% url 'suggest-details' object.pk %}" method="POST">
+                {% csrf_token %}
+                {% load crispy_forms_tags %}
+                {% crispy form %} 
+                </form>
+                </td>
+            {% else %}
+                <td>Status</td>
+                <td>{{ object.status }}</td>
+            {% endif %}
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "panel/panel.html" %}
+{% block title %}Orders{% endblock %}
+
+{% block content %}
+<div class="row">
+    <table class="table"> 
+        <thead>
+            <td scope="col">description</td>
+            <td scope="col">deadline</td>
+            <td scope="col">fields</td>
+            <td scope="col">status</td>
+        </thead>
+        <tbody>
+            {% for order in object_list %}
+            <tr>
+                <td><a href="{% url 'order-details' order.pk %}">{{ order.pk }}</a></td>
+                <td>{{ order.description }}</td>
+                <td>{{ order.deadline }}</td>
+                <td>{{ order.specialized_field.name }}</td>
+                <td>{{ order.status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>  
+    </div>
+</div>
+{% endblock %}
