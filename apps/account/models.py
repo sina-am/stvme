@@ -115,7 +115,7 @@ class Employee(models.Model):
     """ Translators and editors model."""
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     languages = models.ManyToManyField(Language, related_name='employee_languages')
-    specialized_field = models.ManyToManyField(SpecializedField, related_name='employee_fields')
+    specialized_fields = models.ManyToManyField(SpecializedField, related_name='employee_fields')
     min_charge = models.DecimalField(max_digits=10, decimal_places=2, help_text='Minimum charge per word', null=True, blank=True)
     max_charge = models.DecimalField(max_digits=10, decimal_places=2, help_text='Maximum charge per word', null=True, blank=True)
     max_time = models.PositiveSmallIntegerField(help_text='Maximum time per 5000 word in hour', null=True, blank=True)

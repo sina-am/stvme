@@ -32,6 +32,12 @@ class Order(models.Model):
     source_language = models.ForeignKey('account.Language', on_delete=models.CASCADE, related_name='source_language')
     target_language = models.ForeignKey('account.Language', on_delete=models.CASCADE, related_name='target_language')
 
+    def get_text_length(self):
+        return len(self.original_text)
+    
+    def calculate_price(self):
+        return self.get_text_length() * 20
+    
     @property
     def status(self):
         queryset = Suggest.objects.filter(status=Suggest.ACCEPTED, order=self)

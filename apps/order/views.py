@@ -3,9 +3,11 @@ from django.views import generic
 from apps.order.forms import CreateOrderForm, OrderStatusUpdateForm
 from django.urls import reverse_lazy
 from apps.order.models import Suggest, Order
+from apps.order import tasks
 from apps.order import services
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import get_object_or_404
+from django.http.response import HttpResponseRedirect
 
 
 class OrderCreateView(PermissionRequiredMixin, generic.CreateView):
@@ -18,7 +20,8 @@ class OrderCreateView(PermissionRequiredMixin, generic.CreateView):
         self.object = form.save(self.request)
         # TODO: Create suggestions with Celery tasks.
         # services.suggest_to_employee(self.object)
-        return super().form_valid(form)
+        tasks.suggest_to_employee.delay(self.object.pk)
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class OrderListView(PermissionRequiredMixin, generic.ListView):
