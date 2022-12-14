@@ -1,0 +1,34 @@
+{% extends "panel/panel.html" %}
+{% block title %}OrderOffers{% endblock %}
+
+{% block content %}
+<div class="card"> 
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <td scope="col">id</td>
+                <td scope="col">description</td>
+                <td scope="col">deadline</td>
+                <td scope="col">fields</td>
+                <td scope="col">status</td>
+                <td scope="col">price</td>
+            </thead>
+            <tbody>
+                {% for offer in object_list %}
+                <tr>
+                    <td><a href="{% url 'offer-details' offer.pk %}">{{ offer.pk }}</a></td>
+                    <td>{{ offer.order.description }}</td>
+                    <td>{{ offer.order.deadline }}</td>
+                    <td>{{ offer.order.specialized_field.name }}</td>
+                    <td>{{ offer.status }}</td>
+                    <td>{{ offer.price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>  
+        </table>
+    </div>
+    <div class="card-footer">
+        {% include "components/pagination.html" %}
+    </div>
+</div>
+{% endblock %}

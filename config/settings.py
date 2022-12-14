@@ -13,26 +13,20 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+from django.utils.translation import gettext_lazy as _
 
 
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-1-hjqzu=e(vd7%4_bc@%9f-k(*8y)+6*-*acos#tudyns)ldny'
+SECRET_KEY = os.getenv("SECRET_KEY") or "verysafesecretkey"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# for production server don't specify the DEBUG env 
+DEBUG = True if os.getenv("DEBUG") else False
 
 ALLOWED_HOSTS = []
-
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -41,20 +35,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # Third party packages
-    'crispy_forms',
-
+    'django.forms',
+    
     # Main apps
     'apps.account',
     'apps.order',
     'apps.payment',
-    'apps.panel'
+    'apps.common'
 ]
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -68,7 +62,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -128,17 +122,31 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+LOCALE_PATHS = [BASE_DIR / 'locale']
 
+LANGUAGES = [
+    ('fa', _('Persian')),
+    ('en', _('English')),
+]
 # Celery settings
-CELERY_BROKER_URL = "amqp://127.0.0.1:5672//"
-
+CELERY_BROKER_URL = os.getenv("RABBITMQ_URL")
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
+
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static",
+# ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 STATIC_URL = 'static/'
 STATIC_ROOT = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
+# LOGOUT_REDIRECT_URL = '/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'account.User'
+
+# LOGOUT_REDIRECT_URL = 'account/login.html'

@@ -1,0 +1,36 @@
+# For display purpose 
+version: "3.3"
+services:
+  postgresql:
+    image: postgres:alpine
+    env_file:
+      - .env
+    volumes:
+      - db-storage:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:latest
+
+  web:
+    build: .
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - postgresql
+      - rabbitmq
+    env_file:
+      - .env.docker
+
+  tasks:
+    build: .
+    depends_on:
+      - web
+      - postgresql
+      - rabbitmq
+    command: celery -A config worker -l INFO
+    env_file:
+      - .env.docker
+
+volumes:
+  db-storage: {}

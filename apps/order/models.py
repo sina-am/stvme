@@ -1,7 +1,16 @@
 from django.db import models
-from apps.account.models import SpecializedField
 from apps.payment.models import Invoice
+from apps.common.models import Language, SpecializedField
 from django.utils.translation import gettext_lazy as _
+from _md5 import md5
+import pathlib
+
+
+def upload_order_filename(instance, filename):
+    file_extension = pathlib.Path(filename).suffix
+    file_hash = md5(filename.encode('utf-8')).hexdigest()
+    return 'documents/orders/{0}/{1}'.format(
+        instance.customer.id, file_hash + file_extension)
 
 
 class Order(models.Model):
@@ -21,16 +30,16 @@ class Order(models.Model):
 
     customer = models.ForeignKey('account.User', on_delete=models.CASCADE, related_name='customer')
     description = models.CharField(max_length=600, null=True, blank=True)
-    # TODO: Probebly should be separated models
-    original_text = models.TextField()
+    
+    original_text = models.FileField(upload_to=upload_order_filename)
     translated_text = models.TextField(null=True, blank=True)
     edited_text = models.TextField(null=True, blank=True)
 
     deadline = models.DateTimeField()
     specialized_field = models.ForeignKey(SpecializedField, on_delete=models.CASCADE, null=True, blank=True)
     type = models.CharField(choices=TYPES, max_length=12)
-    source_language = models.ForeignKey('account.Language', on_delete=models.CASCADE, related_name='source_language')
-    target_language = models.ForeignKey('account.Language', on_delete=models.CASCADE, related_name='target_language')
+    source_language = models.ForeignKey(Language, on_delete=models.CASCADE, related_name='source_language')
+    target_language = models.ForeignKey(Language, on_delete=models.CASCADE, related_name='target_language')
 
     def get_text_length(self):
         return len(self.original_text)
@@ -40,9 +49,9 @@ class Order(models.Model):
     
     @property
     def status(self):
-        queryset = Suggest.objects.filter(status=Suggest.ACCEPTED, order=self)
+        queryset = OrderOffer.objects.filter(status=OrderOffer.ACCEPTED, order=self)
         if queryset.exists():
-            if Invoice.objects.filter(suggest__in=queryset).exists():
+            if Invoice.objects.filter(offer__in=queryset).exists():
                 return self.IN_PROGRESS
             return self.WAITING_FOR_PAYMENT
         return self.WAITING_FOR_ACCEPT
@@ -56,14 +65,7 @@ class Order(models.Model):
         ]
 
 
-class Assign(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    employee = models.ForeignKey('account.User', on_delete=models.CASCADE)
-    start_at = models.DateTimeField()
-    end_at = models.DateTimeField()
-
-
-class Suggest(models.Model):
+class OrderOffer(models.Model):
     REJECTED = 'REJECTED'
     ACCEPTED = 'ACCEPTED'
     STALING = 'STALING'
@@ -73,10 +75,12 @@ class Suggest(models.Model):
         (STALING, 'Staling')
     )
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    employee = models.ForeignKey('account.User', on_delete=models.CASCADE)
+    employee = models.ForeignKey('account.Employee', on_delete=models.CASCADE)
     status = models.CharField(choices=TYPES, max_length=12, default='STALING')
     price = models.DecimalField(max_digits=5, decimal_places=2)
     
-    def accept_order(self):
-        self.status = self.ACCEPTED
-        self.order.status = WAITING_FOR_PAYMENT
+    
+class AcceptedOrderOffer(models.Model):
+    offer = models.OneToOneField(OrderOffer, on_delete=models.CASCADE) 
+    start_at = models.DateTimeField()
+    end_at = models.DateTimeField()

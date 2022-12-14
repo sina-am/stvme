@@ -6,28 +6,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import Group
 from django.utils.translation import gettext_lazy as _
-
-
-class Language(models.Model):
-    """ Languages that are supported for translation source and target"""
-    name = models.CharField(max_length=20)
-
-    class Meta:
-        db_table = 'languages'
-
-    def __str__(self):
-        return self.name
-
-    
-class SpecializedField(models.Model):
-    """ Specialized fields for employee who translate text"""
-    name = models.CharField(max_length=100)
-
-    class Meta:
-        db_table = 'specialized_fields'
-
-    def __str__(self):
-        return self.name
+from apps.common.models import Language, SpecializedField
 
 
 class UserManager(BaseUserManager):
@@ -67,7 +46,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """ Database model for users in the system """
-    
+
     EDITOR_ROLE = "EDITOR"
     TRANSLATOR_ROLE = "TRANSLATOR"
     CUSTOMER_ROLE = "CUSTOMER"
@@ -82,9 +61,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         (CUSTOMER_ROLE, _('customer')),
     )
 
-    email = models.EmailField(max_length=255, unique=True)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
+    email = models.EmailField(max_length=255, unique=True, verbose_name=_('email'))
+    first_name = models.CharField(max_length=255, verbose_name=_('first name'))
+    last_name = models.CharField(max_length=255, verbose_name=_('last name'))
     role = models.CharField(choices=ROLES, max_length=10, default=CUSTOMER_ROLE)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -113,14 +92,27 @@ class User(AbstractBaseUser, PermissionsMixin):
     
 class Employee(models.Model):
     """ Translators and editors model."""
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    languages = models.ManyToManyField(Language, related_name='employee_languages')
-    specialized_fields = models.ManyToManyField(SpecializedField, related_name='employee_fields')
+    user = models.OneToOneField(
+        User, 
+        on_delete=models.CASCADE,
+        editable=False
+    )
+    languages = models.ManyToManyField(
+        Language,
+        related_name='employee_languages', 
+        help_text=_("languages that you know"),
+        verbose_name=_("languages")
+    )
+    specialized_fields = models.ManyToManyField(
+        SpecializedField,
+        related_name='employee_fields',
+        help_text=_("your professional fields")     
+    )
     min_charge = models.DecimalField(max_digits=10, decimal_places=2, help_text='Minimum charge per word', null=True, blank=True)
     max_charge = models.DecimalField(max_digits=10, decimal_places=2, help_text='Maximum charge per word', null=True, blank=True)
     max_time = models.PositiveSmallIntegerField(help_text='Maximum time per 5000 word in hour', null=True, blank=True)
     min_time = models.PositiveSmallIntegerField(help_text='Minimum time per 5000 word in hour', null=True, blank=True)
-    is_available = models.BooleanField(default=True)
+    is_available = models.BooleanField(default=True, )
 
     class Meta:
         db_table = 'employees'

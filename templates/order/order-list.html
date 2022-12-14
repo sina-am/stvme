@@ -1,0 +1,50 @@
+{% extends "panel/panel.html" %}
+{% block title %}Orders{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <table class="table"> 
+                <thead>
+                    <td scope="col">id</td>
+                    <td scope="col">description</td>
+                    <td scope="col">deadline</td>
+                    <td scope="col">fields</td>
+                    <td scope="col">offers</td>
+                </thead>
+                <tbody>
+                    {% for order in page_obj %}
+                    <tr>
+                        <td><a href="{% url 'order-details' order.pk %}">{{ order.pk }}</a></td>
+                        <td>{{ order.description }}</td>
+                        <td>{{ order.deadline }}</td>
+                        <td>{{ order.specialized_field.name }}</td>
+                        <td>
+                            <span class="badge rounded-pill bg-success text-decoration-none">{{order.offer_count}}</span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>  
+            </table>
+        </div>
+        <div class="card-footer text-muted">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+{% endblock %}

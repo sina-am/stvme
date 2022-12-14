@@ -1,14 +1,7 @@
+# Only runs external services and expose ports
 version: "3.3"
 services:
-  app:
-    build: .
-    ports:
-      - 80:80
-      - 443:443
-    depends_on:
-      - database
-
-  database:
+  postgresql:
     image: postgres:alpine
     env_file:
       - .env
@@ -17,10 +10,10 @@ services:
     volumes:
       - db-storage:/var/lib/postgresql/data
 
-  message-proker:
+  rabbitmq:
     image: rabbitmq:latest
     ports:
       - 5672:5672
-      
+
 volumes:
   db-storage: {}

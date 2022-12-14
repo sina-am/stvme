@@ -1,0 +1,23 @@
+{% extends "account/base.html" %}
+{% load i18n %} 
+{% block title %} {% translate "Login Page" %} {% endblock %}
+
+{% block content %}
+<div class="h-100 d-flex align-items-center justify-content-center" style="padding-top: 10%;">
+  <div class="card">
+    <div class="card-header">
+    {% translate "Login" %}
+    </div>
+    <div class="card-body">
+      <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit" class="btn btn-primary btn-block mb-4">
+        {% translate "Log in" %}
+        </button>
+      </form> 
+      <a class="card-text" href="{%url 'register' %}">{% translate "Don't have an account yes?" %}</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

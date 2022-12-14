@@ -5,5 +5,5 @@ from apps.payment.models import Invoice
 class InvoiceCreateForm(forms.ModelForm):
     class Meta:
         model = Invoice
-        fields = ('suggest', )
-        
+        fields = ('offer', )
+       

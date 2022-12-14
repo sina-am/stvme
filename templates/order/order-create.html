@@ -1,0 +1,12 @@
+{% extends "panel/panel.html" %}
+{% block title %}New Order{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form method="post" enctype="multipart/form-data" action={% url 'new-order' %}>
+        {% csrf_token %}
+        {{form}}
+        <button type="submit" class="btn btn-primary btn-block mb-4">New</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,3 +1,7 @@
 .venv/
 __pycache__/
 .vscode
+static/
+media/
+# Ignore migration files for now
+migrations/

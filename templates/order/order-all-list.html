@@ -1,0 +1,40 @@
+{% extends "panel/panel.html" %}
+{% block title %}Orders All{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <table class="table"> 
+            <thead>
+                <td scope="col">id</td>
+                <td scope="col">description</td>
+                <td scope="col">deadline</td>
+                <td scope="col">fields</td>
+                <td scope="col">status</td>
+            </thead>
+            <tbody>
+                {% for order in page_obj %}
+                <tr>
+                    <td>
+                        {% if order.recomended %}
+                        <a class="badge rounded-pill bg-success text-decoration-none" href="{% url 'offer-details' order.offer_id %}">recomended</span>
+                        {% else %}
+                        {{order.id}}
+                        {% endif %}
+
+                    </td>
+                    <td>
+                        {{ order.description }}</td>
+                    <td>{{ order.deadline }}</td>
+                    <td>{{ order.specialized_field.name }}</td>
+                    <td>{{ order.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>  
+        </table>
+    </div>
+    <div class="card-footer">
+        {% include "components/pagination.html" %}
+    </div>
+</div>
+{% endblock %}

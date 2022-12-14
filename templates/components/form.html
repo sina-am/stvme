@@ -1,0 +1,37 @@
+{% if errors %}
+<div class="alert alert-danger" role="alert">{{ errors }}</div>
+{% endif %}
+{% if errors and not fields %}
+  <div class="alert alert-danger" role="alert">{% for field in hidden_fields %}{{ field }}{% endfor %}</div>
+{% endif %}
+{% for field, errors in fields %}
+<div class="form-outline mb-4">
+  <div{% with classes=field.css_classes %}{% if classes %} class="{{classses}}"{% endif %}{% endwith %}>
+    {% if field.use_fieldset %}
+      <fieldset>
+      {% if field.label %}
+      <label class="form-label" for="{{ field.id_for_label}}">{{ field.legend_tag }}</label>
+      {% endif %}
+    {% else %}
+      {% if field.label %}
+        <label class="form-label" for="{{ field.id_for_label }}">{{ field.label_tag}}</label>
+      {% endif %}
+      </br>
+    {% endif %}
+    {% comment %} {% if field.help_text %}<div class="helptext">{{ field.help_text|safe }}</div>{% endif %} {% endcomment %}
+    {% if errors %}
+    <div class="alert alert-danger" role="alert">{{ errors }}</div>
+    {% endif %}
+    {{ field }}
+    {% if field.use_fieldset %}</fieldset>{% endif %}
+    {% if forloop.last %}
+      {% for field in hidden_fields %}{{ field }}{% endfor %}
+    {% endif %}
+    </div>
+</div>
+
+{% endfor %}
+{% if not fields and not errors %}
+  {% for field in hidden_fields %}{{ field }}{% endfor %}
+{% endif %}
+

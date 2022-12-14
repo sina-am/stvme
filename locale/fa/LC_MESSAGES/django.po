@@ -1,0 +1,109 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-14 23:03+0330\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: apps/account/models.py:55 apps/account/models.py:59
+msgid "editor"
+msgstr ""
+
+#: apps/account/models.py:56 apps/account/models.py:60
+msgid "translator"
+msgstr "مترجم"
+
+#: apps/account/models.py:61
+msgid "customer"
+msgstr "مشتری"
+
+#: apps/account/models.py:64
+msgid "email"
+msgstr "ادرس الکترونیکی"
+
+#: apps/account/models.py:65
+msgid "first name"
+msgstr "اسم"
+
+#: apps/account/models.py:66
+msgid "last name"
+msgstr "فامیل"
+
+#: apps/account/models.py:70
+msgid "date joined"
+msgstr "تاریخ ورود"
+
+#: apps/account/models.py:103
+msgid "languages that you know"
+msgstr "زبان‌های تخصیی"
+
+#: apps/account/models.py:104
+msgid "languages"
+msgstr "زبان‌ها"
+
+#: apps/account/models.py:109
+msgid "your professional fields"
+msgstr "رشته تخصصی"
+
+#: apps/account/models.py:122
+msgid "min charge should be less than max charge"
+msgstr ""
+
+#: apps/account/models.py:126
+msgid "min time should be less than max time"
+msgstr ""
+
+#: apps/order/models.py:63
+msgid "source and target language can't be the same"
+msgstr ""
+
+#: config/settings.py:128
+msgid "Persian"
+msgstr ""
+
+#: config/settings.py:129
+msgid "English"
+msgstr ""
+
+#: templates/account/login.html:3
+msgid "Login Page"
+msgstr "صفحه ورود به حساب"
+
+#: templates/account/login.html:9 templates/panel/index.html:18
+msgid "Login"
+msgstr "ورود"
+
+#: templates/account/login.html:16
+msgid "Log in"
+msgstr "ورود"
+
+#: templates/account/login.html:19
+msgid "Don't have an account yes?"
+msgstr "هنوز حساب کاربری ندارید؟"
+
+#: templates/panel/index.html:17
+msgid "Home"
+msgstr "خانه"   
+
+#: templates/panel/index.html:19
+msgid "Sign up"
+msgstr "ثبت نام"
+
+#: templates/panel/index.html:25
+#, fuzzy
+#| msgid "languages"
+msgid "Language"
+msgstr "زبان"

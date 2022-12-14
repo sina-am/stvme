@@ -1,0 +1,31 @@
+{% extends "account/base.html" %}
+{% block title %}Login Page{% endblock %}
+
+{% block content %}
+<!-- Jumbotron -->
+<div class="px-4 py-5 px-md-5 text-lg-start">
+    <div class="container">
+      <div class="row gx-lg-5 align-items-center">      
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <div class="card">
+            <div class="card-header">
+              Register
+            </div>
+            <div class="card-body py-5 px-md-5">
+              <form method="POST" action="{% url 'register' %}">
+                {% csrf_token %}
+                {{form}}
+                <button type="submit" class="btn btn-primary btn-block mb-4">
+                Sign up
+                </button>
+              </form>
+                <a href="{% url 'login' %}">Have an account?</a>
+            </div>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

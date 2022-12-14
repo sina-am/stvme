@@ -16,13 +16,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import RedirectView
+from apps.common import views
+from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
 
 
-urlpatterns = [
+urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
     path('accounts/', include('apps.account.urls')),
-    path('panel/', include('apps.panel.urls')),
+    path('panel/', views.PanelView.as_view(), name='panel'),
     path('panel/', include('apps.order.urls')),
     path('payment/', include('apps.payment.urls')),
-    path('', RedirectView.as_view(pattern_name='panel', permanent=True)),
-]
+    path('', views.IndexView.as_view(), name=''),
+)
+
+if settings.DEBUG:
+    from django.conf.urls.static import static
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    
