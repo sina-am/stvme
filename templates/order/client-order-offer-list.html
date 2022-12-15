@@ -1,0 +1,41 @@
+{% extends "panel/panel.html" %}
+{% block content%}
+<div id="accordion">
+    {% for offer in page_obj%}
+        {{offer.order}}
+    {% endfor%}
+    <div class="card">
+    <div class="card-header" id="headingOne">
+        <h5 class="mb-0">
+        <button class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Offers
+        </button>
+        </h5>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <td scope="col">Translator</td>
+                    <td scope="col">Price</td>
+                    <td scope="col">Status</td>
+                </thead>
+                <tbody>
+                    {% for offer in object_list %}
+                    <tr>
+                        <td><a href="{% url 'translator-detail' offer.translator.pk %}">{{ offer.translator.user.last_name }}</a></td>
+                        <td>{{ offer.price }}</td>
+                        <td>
+                            <button class="btn btn-success"/>Accept
+                            <button class="btn btn-danger"/>Reject
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>  
+            </table>
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock %}

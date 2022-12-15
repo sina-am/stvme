@@ -27,7 +27,7 @@ msgid "translator"
 msgstr "مترجم"
 
 #: apps/account/models.py:61
-msgid "customer"
+msgid "client"
 msgstr "مشتری"
 
 #: apps/account/models.py:64

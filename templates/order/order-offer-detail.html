@@ -1,5 +1,5 @@
 {% extends "panel/panel.html" %}
-{% block title %}OrderOffer Details{% endblock %}
+{% block title %}Order Offer Details{% endblock %}
 
 {% block content %}
 <table class="table">
@@ -19,11 +19,7 @@
         <tr>
             <td> Specialized Field </td>
             <td> {{ object.order.specialized_field.name }} </td>
-        </tr>
-        <tr>
-            <td> Ordered For </td>
-            <td> {{ object.order.type }} </td>
-        </tr>
+        </tr> 
         <tr>
             <td> Source Language </td>
             <td> {{ object.order.source_language.name }} </td>

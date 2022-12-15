@@ -16,12 +16,16 @@
                 <tbody>
                     {% for order in page_obj %}
                     <tr>
-                        <td><a href="{% url 'order-details' order.pk %}">{{ order.pk }}</a></td>
+                        <td>
+                            <a href="{% url 'client-order-detail' order.pk %}">{{ order.pk }}</a>
+                        </td> 
                         <td>{{ order.description }}</td>
                         <td>{{ order.deadline }}</td>
                         <td>{{ order.specialized_field.name }}</td>
                         <td>
-                            <span class="badge rounded-pill bg-success text-decoration-none">{{order.offer_count}}</span>
+                            <span class="badge rounded-pill bg-success text-decoration-none">
+                                <a class="text-muted" href="{% url 'client-offer-list' %}">{{order.offer_count}}</a>
+                            </span>
                         </td>
                     </tr>
                     {% endfor %}

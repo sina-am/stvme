@@ -9,15 +9,29 @@ class CreateOrderForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = (
-            'description', 'original_text',
-            'deadline', 'specialized_field', 
-            'type', 'source_language', 'target_language'
+            'text', 'specialized_field',
+            'source_language', 'target_language',
+            'description', 'deadline', 'edit_needed'
         )
          
     template_name = 'components/form.html'
     
     def save(self, request):
-        self.instance.customer = request.user
+        self.instance.client = request.user
+        return super().save()
+
+class CreateOfferForm(forms.ModelForm):
+    class Meta:
+        model = OrderOffer
+        fields = (
+            'price',
+        )
+         
+    template_name = 'components/form.html'
+    
+    def save(self, translator, order):
+        self.instance.order = order
+        self.instance.translator = translator
         return super().save()
 
 

@@ -4,7 +4,7 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
-from apps.account.models import User, Employee
+from apps.account.models import User, Translator
 
 
 class UserRegisterForm(UserCreationForm):
@@ -12,7 +12,7 @@ class UserRegisterForm(UserCreationForm):
         model = User
         fields = ('email', 'first_name', 'last_name', 'password1', 'password2', 'role')
 
-    role = forms.ChoiceField(choices=User.ROLES, label="register as", widget=forms.RadioSelect)
+    role = forms.ChoiceField(choices=User.ROLES, label="register as")
     template_name = 'components/form.html'
     
     def save(self):
@@ -36,9 +36,9 @@ class CustomerUserUpdateForm(forms.ModelForm):
     template_name = 'components/form.html'
 
 
-class EmployeeUserUpdateForm(forms.ModelForm):
+class TranslatorUserUpdateForm(forms.ModelForm):
     class Meta:
-        model = Employee
+        model = Translator
         exclude = ('user', )
         
     first_name = forms.CharField(max_length=100)

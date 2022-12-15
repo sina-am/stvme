@@ -1,0 +1,46 @@
+{% extends "panel/panel.html" %}
+{% block title %} Translator Profile{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            Profile Details
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td> Email </td>
+                        <td> {{ translator.user.email }} </td>
+                    </tr>
+                    <tr>
+                        <td> Name </td>
+                        <td> {{ translator.user.first_name }} {{ translator.user.last_name }}</td>
+                    </tr>
+                    <tr>
+                        <td> Available </td>
+                        <td> {{ translator.is_available }} </td>
+                    </tr>
+                    <tr>
+                        <td> Languages </td>
+                        <td>
+                            {% for lang in translator.languages.all %} 
+                            <small class="d-inline-flex mb-3 px-2 py-1 fw-semibold text-dark bg-secondary bg-opacity-10 border border-dark border-opacity-10 rounded-2">{{lang.name}}</small>
+                            {% endfor %}     
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> Specialized Field </td>
+                        <td>
+                            {% for field in translator.specialized_fields.all %} 
+                            <small class="d-inline-flex mb-3 px-2 py-1 fw-semibold text-dark bg-secondary bg-opacity-10 border border-dark border-opacity-10 rounded-2">{{field.name}}</small>
+                            {% endfor %}     
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

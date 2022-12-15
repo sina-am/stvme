@@ -23,10 +23,10 @@
         <div class="row">
             <div class="col-2">
                 <div class="nav flex-column navbar-light border">
-                    {% if user.is_employee %}
-                        {% include "panel/employee-menu.html" %}
+                    {% if user.is_translator %}
+                        {% include "panel/translator-menu.html" %}
                     {% else %}
-                        {% include "panel/customer-menu.html" %}
+                        {% include "panel/client-menu.html" %}
                     {% endif %}
                 </div>
             </div>

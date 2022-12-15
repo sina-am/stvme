@@ -1,0 +1,41 @@
+{% extends "panel/panel.html" %}
+{% block title %} Translators {% endblock %}
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <table class="table"> 
+                <thead>
+                    <td scope="col">Email</td>
+                    <td scope="col">Name</td>
+                </thead>
+                <tbody>
+                    {% for translator in page_obj %}
+                    <tr>
+                        <td><a href="{% url 'translator-detail' translator.pk %}">{{ translator.user.email }}</a></td>
+                        <td>{{ translator.user.first_name }} {{translator.user.last_name}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>  
+            </table>
+        </div>
+        <div class="card-footer text-muted">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+{% endblock %}

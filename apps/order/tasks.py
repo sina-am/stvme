@@ -5,8 +5,8 @@ from apps.order import services
 
 
 @shared_task
-def offer_to_employee(order_id: int):
-    services.offer_to_employee(order_id)
+def offer_to_translator(order_id: int):
+    services.offer_to_translator(order_id)
 
 
 @shared_task

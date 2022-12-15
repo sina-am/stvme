@@ -12,14 +12,14 @@ from apps.common.models import Language, SpecializedField
 class UserManager(BaseUserManager):
     """ Manager for user profiles """
     def create_permissions(self, user):
-        if user.is_customer:
-            group, created = Group.objects.get_or_create(name='customers')
+        if user.is_client:
+            group, created = Group.objects.get_or_create(name='clients')
             user.groups.add(group)
-        elif user.is_employee:
-            group, created = Group.objects.get_or_create(name='employees')
+        elif user.is_translator:
+            group, created = Group.objects.get_or_create(name='translators')
             user.groups.add(group)
 
-    def create_user(self, email, first_name, last_name, password=None, role='CUSTOMER'):
+    def create_user(self, email, first_name, last_name, password=None, role='CLIENT'):
         """ Create a new user profile """
         if not email:
             raise ValueError('User must have an email address')
@@ -30,8 +30,8 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         self.create_permissions(user)
         
-        if user.role in User.EMPLOYEE_ROLES:
-            Employee.objects.create(user=user)
+        if user.role == User.TRANSLATOR_ROLE:
+            Translator.objects.create(user=user)
             
         return user
 
@@ -47,24 +47,18 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     """ Database model for users in the system """
 
-    EDITOR_ROLE = "EDITOR"
     TRANSLATOR_ROLE = "TRANSLATOR"
-    CUSTOMER_ROLE = "CUSTOMER"
+    CLIENT_ROLE = "CLIENT"
     
-    EMPLOYEE_ROLES = (
-        (EDITOR_ROLE, _('editor')),
-        (TRANSLATOR_ROLE, _('translator')),
-    )
     ROLES = (
-        (EDITOR_ROLE, _('editor')),
         (TRANSLATOR_ROLE, _('translator')),
-        (CUSTOMER_ROLE, _('customer')),
+        (CLIENT_ROLE, _('client')),
     )
 
     email = models.EmailField(max_length=255, unique=True, verbose_name=_('email'))
     first_name = models.CharField(max_length=255, verbose_name=_('first name'))
     last_name = models.CharField(max_length=255, verbose_name=_('last name'))
-    role = models.CharField(choices=ROLES, max_length=10, default=CUSTOMER_ROLE)
+    role = models.CharField(choices=ROLES, max_length=10, default=CLIENT_ROLE)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
@@ -82,15 +76,15 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
     @property
-    def is_employee(self):
-        return self.role in [self.EDITOR_ROLE, self.TRANSLATOR_ROLE]
+    def is_translator(self):
+        return self.role == self.TRANSLATOR_ROLE
     
     @property
-    def is_customer(self):
-        return self.role == self.CUSTOMER_ROLE
+    def is_client(self):
+        return self.role == self.CLIENT_ROLE
             
     
-class Employee(models.Model):
+class Translator(models.Model):
     """ Translators and editors model."""
     user = models.OneToOneField(
         User, 
@@ -99,13 +93,13 @@ class Employee(models.Model):
     )
     languages = models.ManyToManyField(
         Language,
-        related_name='employee_languages', 
+        related_name='translator_languages', 
         help_text=_("languages that you know"),
         verbose_name=_("languages")
     )
     specialized_fields = models.ManyToManyField(
         SpecializedField,
-        related_name='employee_fields',
+        related_name='translator_fields',
         help_text=_("your professional fields")     
     )
     min_charge = models.DecimalField(max_digits=10, decimal_places=2, help_text='Minimum charge per word', null=True, blank=True)
@@ -115,7 +109,7 @@ class Employee(models.Model):
     is_available = models.BooleanField(default=True, )
 
     class Meta:
-        db_table = 'employees'
+        db_table = 'translators'
         constraints = [
             models.CheckConstraint(
                 check=models.Q(min_charge__lt=models.F('max_charge')),

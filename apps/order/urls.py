@@ -4,13 +4,14 @@ from django.contrib.auth.views import LogoutView
 
 
 urlpatterns = [
-    path('all/orders/', views.AllOrderListView.as_view(), name='all-order-list'),
-
-    path('my/orders/new/', views.OrderCreateView.as_view(), name='new-order'),
-    path('my/orders/', views.CustomerOrderListView.as_view(), name='order-list'),
-    # path('my/orders/accepted/', views.OrderOfferListView.as_view(), name='accepted-order-list'),
-    path('my/orders/<int:pk>/', views.CustomerOrderDetailView.as_view(), name='order-details'),
+    path('my/orders/new/', views.ClientOrderCreateView.as_view(), name='new-order'),
+    path('my/orders/', views.ClientOrderListView.as_view(), name='client-order-list'),
+    path('my/orders/<int:pk>/', views.ClientOrderDetailView.as_view(), name='client-order-detail'),
+    path('my/offers/', views.ClientRecvOfferListView.as_view(), name='client-offer-list'),
     
+    path('all/orders/', views.TranslatorOrderListView.as_view(), name='translator-order-list'),
+    path('all/orders/<int:pk>', views.TranslatorOrderDetailView.as_view(), name='translator-order-detail'),
+    path('all/orders/<int:pk>/offers/new', views.OfferCreateView.as_view(), name='new-offer'),
    
     # path('my/jobs/', views.AcceptedOrderOfferListView.as_view(), name='accepted-offer-list'),
     path('my/offers/', views.FreelancerOrderOfferListView.as_view(), name='offer-list'),

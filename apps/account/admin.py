@@ -38,6 +38,6 @@ class UserAdmin(BaseUserAdmin):
     )
 
 admin.site.register(User, UserAdmin)
-admin.site.register(Employee)
+admin.site.register(Translator)
 admin.site.register(Language)
 admin.site.register(SpecializedField)

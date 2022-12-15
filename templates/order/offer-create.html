@@ -1,5 +1,5 @@
 {% extends "panel/panel.html" %}
-{% block title %}Order Details{% endblock %}
+{% block title %}New Offer{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -16,7 +16,7 @@
                     </tr>
                     <tr>
                         <td> Text </td>
-                        <td><a href="{{ order.original_text.url }}">Download</a></td>
+                        <td><a href="{{ order.text.url }}">Download</a></td>
                     </tr>
                     <tr>
                         <td> Deadline </td>
@@ -27,8 +27,8 @@
                         <td> {{ order.specialized_field.name }} </td>
                     </tr>
                     <tr>
-                        <td> Ordered For </td>
-                        <td> {{ order.type }} </td>
+                        <td> Edit Needed </td>
+                        <td> {% if order.edit_needed %} Yes {% else %} No {% endif %}</td>
                     </tr>
                     <tr>
                         <td> Source Language </td>
@@ -47,4 +47,9 @@
         </div>
     </div>
 </div>
+    <form method="post" action="{% url 'new-offer' order.id %}">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit" class="btn btn-primary btn-block mb-4">New</button>
+    </form>
 {% endblock %}

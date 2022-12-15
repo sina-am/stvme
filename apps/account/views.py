@@ -4,7 +4,7 @@ from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from apps.account import forms
-from apps.account.models import Employee
+from apps.account.models import Translator
 from django.contrib.auth import login
 from django.contrib.auth.views import LogoutView
 
@@ -30,21 +30,21 @@ class UserRegisterView(generic.CreateView):
     success_url = reverse_lazy('login')
 
 
-class EmployeeUpdateView(generic.UpdateView):
+class TranslatorUpdateView(generic.UpdateView):
     template_name = 'account/profile.html'
     success_url = reverse_lazy('panel')
-    form_class = forms.EmployeeUserUpdateForm
+    form_class = forms.TranslatorUserUpdateForm
     
     def get_initial(self):        
-        employee = self.get_object()
+        translator = self.get_object()
         self.initial.update({
-            'first_name': employee.user.first_name,
-            'last_name': employee.user.last_name
+            'first_name': translator.user.first_name,
+            'last_name': translator.user.last_name
         })
         
     def get_object(self):
-        employee, created = Employee.objects.get_or_create(user=self.request.user)
-        return employee
+        translator, created = Translator.objects.get_or_create(user=self.request.user)
+        return translator
 
 class CustomerUpdateView(generic.UpdateView):
     template_name = 'account/profile.html'
@@ -53,3 +53,15 @@ class CustomerUpdateView(generic.UpdateView):
     
     def get_object(self):
         return self.request.user
+
+
+class TranslatorListView(generic.ListView):
+    template_name = 'account/user-list.html'
+    paginate_by = 5
+    
+    def get_queryset(self):
+        return Translator.objects.all().order_by('user__email')
+
+class TranslatorDetailView(generic.DetailView):
+    template_name = 'account/user-detail.html'
+    model = Translator 

@@ -13,7 +13,7 @@ class Language(models.Model):
 
     
 class SpecializedField(models.Model):
-    """ Specialized fields for employee who translate text"""
+    """ Specialized fields for translator who translate text"""
     name = models.CharField(max_length=100)
 
     class Meta:
