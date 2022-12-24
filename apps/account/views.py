@@ -7,6 +7,8 @@ from apps.account import forms
 from apps.account.models import Translator
 from django.contrib.auth import login
 from django.contrib.auth.views import LogoutView
+from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
 
 
 class LoginView(generic.FormView):
@@ -30,11 +32,24 @@ class UserRegisterView(generic.CreateView):
     success_url = reverse_lazy('login')
 
 
-class TranslatorUpdateView(generic.UpdateView):
+
+class ProfileUpdateView(generic.UpdateView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["view_url"] = self.action_url 
+        return context
+
+    def form_valid(self, form):
+        messages.success(self.request, _("profile updated successfully"))
+        return super().form_valid(form)
+     
+ 
+class TranslatorUpdateView(ProfileUpdateView):
     template_name = 'account/profile.html'
     success_url = reverse_lazy('panel')
     form_class = forms.TranslatorUserUpdateForm
-    
+    action_url = 'translator-update'
+
     def get_initial(self):        
         translator = self.get_object()
         self.initial.update({
@@ -46,11 +61,12 @@ class TranslatorUpdateView(generic.UpdateView):
         translator, created = Translator.objects.get_or_create(user=self.request.user)
         return translator
 
-class CustomerUpdateView(generic.UpdateView):
+class ClientUpdateView(ProfileUpdateView):
     template_name = 'account/profile.html'
     success_url = reverse_lazy('panel')
     form_class = forms.CustomerUserUpdateForm
-    
+    action_url = 'client-update'
+   
     def get_object(self):
         return self.request.user
 

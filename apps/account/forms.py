@@ -39,7 +39,7 @@ class CustomerUserUpdateForm(forms.ModelForm):
 class TranslatorUserUpdateForm(forms.ModelForm):
     class Meta:
         model = Translator
-        exclude = ('user', )
+        exclude = ('user', 'credit')
         
     first_name = forms.CharField(max_length=100)
     last_name = forms.CharField(max_length=100)

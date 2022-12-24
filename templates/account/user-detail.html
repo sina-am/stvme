@@ -23,13 +23,17 @@
                         <td> {{ translator.is_available }} </td>
                     </tr>
                     <tr>
+                        <td> Credit </td>
+                        <td> {{ translator.credit }} </td>
+                    </tr>
+                    <tr>
                         <td> Languages </td>
                         <td>
                             {% for lang in translator.languages.all %} 
                             <small class="d-inline-flex mb-3 px-2 py-1 fw-semibold text-dark bg-secondary bg-opacity-10 border border-dark border-opacity-10 rounded-2">{{lang.name}}</small>
                             {% endfor %}     
                         </td>
-                    </tr>
+                    </tr> 
                     <tr>
                         <td> Specialized Field </td>
                         <td>

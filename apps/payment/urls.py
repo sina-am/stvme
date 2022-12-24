@@ -3,5 +3,5 @@ from apps.payment import views
 
 
 urlpatterns = [
-    path('', views.InvoiceCreateView.as_view(), name='payment')
+    path('invoices/new', views.InvoiceCreateView.as_view(), name='new-invoice'),
 ]

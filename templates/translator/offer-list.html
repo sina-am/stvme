@@ -1,0 +1,59 @@
+{% extends "panel/panel.html" %}
+{% block title %}Order Details{% endblock %}
+
+{% block content %}
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            {% if order_id %}
+                <a class="nav-link" aria-current="page" href="{% url 'translator-order-detail' order_id %}">Details</a>
+            {% else %}
+                <a class="nav-link" aria-current="page" href="{% url 'translator-order-list' %}">Details</a>
+            {% endif %}
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active">Offers</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="card">
+            {% if not my_offer %}
+            <div class="card-header">
+                Make an offer: 
+                <form action="{% url 'translator-offer-list' %}?order_id={{order_id}}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{order_id}}" name="order"/>
+                    <input type="text" name="price"/>
+                    <input type="submit" class="btn btn-primary" value="Save"/>
+                </form>
+            </div>
+           {% endif %}
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <td scope="col">Translator</td>
+                        <td scope="col">Price</td>
+                    </thead>
+                    <tbody>
+                        {% if my_offer %}
+                        <tr>
+                            <td>Me</td>
+                            <td>{{my_offer.price}}</td>
+                        </tr>
+                        {% endif %}
+ 
+                        {% for offer in object_list %}
+                        {% if offer != my_offer%}
+                        <tr>
+                            <td><a href="{% url 'translator-detail' offer.translator.pk %}">{{ offer.translator.user.last_name }}</a></td>
+                            <td>{{ offer.price }}</td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>  
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

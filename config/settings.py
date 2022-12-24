@@ -14,6 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 from django.utils.translation import gettext_lazy as _
+from django.contrib.messages import constants
 
 
 load_dotenv()
@@ -149,4 +150,11 @@ STATIC_ROOT = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'account.User'
 
+MESSAGE_TAGS = {
+        constants.DEBUG: 'alert-secondary',
+        constants.INFO: 'alert-info',
+        constants.SUCCESS: 'alert-success',
+        constants.WARNING: 'alert-warning',
+        constants.ERROR: 'alert-danger',
+ }
 # LOGOUT_REDIRECT_URL = 'account/login.html'

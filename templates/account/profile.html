@@ -4,7 +4,7 @@
 {% block content %}
 <div class="row-2">
     <div class="col-4">
-        <form method="POST" action="{% url 'profile-translator' %}">
+        <form method="POST" action="{% url view_url %}">
         {% csrf_token %}
         {{form}} 
         <button type="submit" class="btn btn-primary btn-block mb-4">Save</button>

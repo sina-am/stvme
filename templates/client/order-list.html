@@ -12,6 +12,7 @@
                     <td scope="col">deadline</td>
                     <td scope="col">fields</td>
                     <td scope="col">offers</td>
+                    <td scope="col">status</td>
                 </thead>
                 <tbody>
                     {% for order in page_obj %}
@@ -23,10 +24,11 @@
                         <td>{{ order.deadline }}</td>
                         <td>{{ order.specialized_field.name }}</td>
                         <td>
-                            <span class="badge rounded-pill bg-success text-decoration-none">
-                                <a class="text-muted" href="{% url 'client-offer-list' %}">{{order.offer_count}}</a>
+                            <span class="badge rounded-pill bg-success">
+                                {{order.offer_count}}
                             </span>
                         </td>
+                        <td>{{ order.status }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>  

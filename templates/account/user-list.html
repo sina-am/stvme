@@ -8,12 +8,14 @@
                 <thead>
                     <td scope="col">Email</td>
                     <td scope="col">Name</td>
+                    <td score="col">Credit</td>
                 </thead>
                 <tbody>
                     {% for translator in page_obj %}
                     <tr>
                         <td><a href="{% url 'translator-detail' translator.pk %}">{{ translator.user.email }}</a></td>
                         <td>{{ translator.user.first_name }} {{translator.user.last_name}}</td>
+                        <td>{{ translator.credit }} </td>
                     </tr>
                     {% endfor %}
                 </tbody>  

@@ -1,6 +1,6 @@
 from apps.account.models import Translator
 from apps.order.models import Order, OrderOffer
-from django.db.models import Q, Exists, OuterRef, Count
+from django.db.models import Q, Exists, OuterRef, Count, Subquery
 
 
 def find_best_match(order_id: int, price: int):
@@ -25,6 +25,4 @@ def get_recomendations(user_id: int):
     )
 
 def get_orders_and_offer():
-    return Order.objects.all().annotate(
-        offer_count=Count(OrderOffer.objects.filter(order=OuterRef('id')).values('id'))
-    )
+    return Order.objects.all().annotate(offer_count=Count('orderoffer'))

@@ -1,0 +1,93 @@
+{% extends "panel/panel.html" %}
+{% block title %}Order Details{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            Order Details
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td> Description </td>
+                        <td> {{ order.description }} </td>
+                    </tr>
+                    <tr>
+                        <td> Text </td>
+                        <td><a href="{{ order.text.url }}">Download</a></td>
+                    </tr>
+                    <tr>
+                        <td> Deadline </td>
+                        <td> {{ order.deadline }} </td>
+                    </tr>
+                    <tr>
+                        <td> Specialized Field </td>
+                        <td> {{ order.specialized_field.name }} </td>
+                    </tr>
+                    <tr>
+                        <td> Edit Needed </td>
+                        <td> {% if order.edit_needed %} Yes {% else %} No {% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td> Source Language </td>
+                        <td> {{ order.source_language.name }} </td>
+                    </tr>
+                    <tr>
+                        <td> Target Language </td>
+                        <td> {{ order.target_language.name }} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+            <button class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Offers
+            </button>
+            </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <td scope="col">Translator</td>
+                        <td scope="col">Price</td>
+                        <td scope="col">Status</td>
+                    </thead>
+                    <tbody>
+                        {% for offer in offer_list %}
+                        <tr>
+                            <td>
+                                <i class="bi bi-person"></i>
+                                <a href="{% url 'translator-detail' offer.translator.pk %}">{{ offer.translator.user.first_name }} {{offer.translator.user.last_name}}</a>
+                            </td>
+
+                            <td>{{ offer.price }}</td>
+                            <td>
+                                {% if offer.is_rejected%}
+                                    Rejected
+                                {% elif offer.is_accepted %}
+                                    Accepted
+                                {% else %}
+                                <a class="btn btn-success" href="{% url 'client-offer-detail' offer.id %}">Accept</a>
+                                <form method="post" action="{% url 'client-order-detail' order.id %}">
+                                    {% csrf_token %}
+                                        <input type="hidden" name="offer_id" value="{{offer.id}}"/>
+                                        <input type="submit" class="btn btn-danger" name="status" value="REJECTED"/>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>  
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

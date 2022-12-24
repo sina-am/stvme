@@ -1,0 +1,57 @@
+{% extends "panel/panel.html" %}
+{% block title %}Order Details{% endblock %}
+
+{% block content %}
+<div class="container">
+    <ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Details</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'translator-offer-list' %}?order_id={{order.id}}">Offers</a>
+    </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="card">
+            <div class="card-body">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td> Description </td>
+                            <td> {{ order.description }} </td>
+                        </tr>
+                        <tr>
+                            <td> Text </td>
+                            <td><a href="{{ order.text.url }}">Download</a></td>
+                        </tr>
+                        <tr>
+                            <td> Deadline </td>
+                            <td> {{ order.deadline }} </td>
+                        </tr>
+                        <tr>
+                            <td> Specialized Field </td>
+                            <td><i class="{{order.specialized_field.icon}}"></i>{{ order.specialized_field.name }} </td>
+                        </tr>
+                        <tr>
+                            <td> Edit Needed </td>
+                            <td> {% if order.edit_needed %} Yes {% else %} No {% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td> Source Language </td>
+                            <td><i class="{{order.source_language.icon}}"></i>{{ order.source_language.name }} </td>
+                        </tr>
+                        <tr>
+                            <td> Target Language </td>
+                            <td><i class="{{order.target_language.icon}}"></i>  {{ order.target_language.name }} </td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td>{{ order.status }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>    
+    </div>
+</div>
+{% endblock %}

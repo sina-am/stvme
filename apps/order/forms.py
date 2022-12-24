@@ -24,15 +24,20 @@ class CreateOfferForm(forms.ModelForm):
     class Meta:
         model = OrderOffer
         fields = (
+            'order',
             'price',
         )
          
     template_name = 'components/form.html'
     
-    def save(self, translator, order):
-        self.instance.order = order
+    def save(self, translator):
         self.instance.translator = translator
         return super().save()
+
+class UpdateOfferStatusForm(forms.Form):
+    status = forms.ChoiceField(choices=OrderOffer.TYPES)
+    offer_id = forms.IntegerField() 
+    template_name = 'components/form.html'
 
 
 class OrderStatusUpdateForm(forms.ModelForm):

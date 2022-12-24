@@ -26,10 +26,7 @@
                     <tr>
                         <td><a href="{% url 'translator-detail' offer.translator.pk %}">{{ offer.translator.user.last_name }}</a></td>
                         <td>{{ offer.price }}</td>
-                        <td>
-                            <button class="btn btn-success"/>Accept
-                            <button class="btn btn-danger"/>Reject
-                        </td>
+
                     </tr>
                     {% endfor %}
                 </tbody>  

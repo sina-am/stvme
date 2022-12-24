@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-14 23:03+0330\n"
+"POT-Creation-Date: 2022-12-18 14:25+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,63 +18,81 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: apps/account/models.py:55 apps/account/models.py:59
-msgid "editor"
-msgstr ""
-
-#: apps/account/models.py:56 apps/account/models.py:60
+#: apps/account/models.py:54
 msgid "translator"
 msgstr "مترجم"
 
-#: apps/account/models.py:61
+#: apps/account/models.py:55
 msgid "client"
 msgstr "مشتری"
 
-#: apps/account/models.py:64
+#: apps/account/models.py:58
 msgid "email"
 msgstr "ادرس الکترونیکی"
 
-#: apps/account/models.py:65
+#: apps/account/models.py:59
 msgid "first name"
 msgstr "اسم"
 
-#: apps/account/models.py:66
+#: apps/account/models.py:60
 msgid "last name"
 msgstr "فامیل"
 
-#: apps/account/models.py:70
+#: apps/account/models.py:64
 msgid "date joined"
 msgstr "تاریخ ورود"
 
-#: apps/account/models.py:103
+#: apps/account/models.py:97
 msgid "languages that you know"
 msgstr "زبان‌های تخصیی"
 
-#: apps/account/models.py:104
+#: apps/account/models.py:98
 msgid "languages"
 msgstr "زبان‌ها"
 
-#: apps/account/models.py:109
+#: apps/account/models.py:103
 msgid "your professional fields"
 msgstr "رشته تخصصی"
 
-#: apps/account/models.py:122
+#: apps/account/models.py:118
 msgid "min charge should be less than max charge"
 msgstr ""
 
-#: apps/account/models.py:126
+#: apps/account/models.py:122
 msgid "min time should be less than max time"
 msgstr ""
 
-#: apps/order/models.py:63
+#: apps/account/views.py:43
+msgid "profile updated successfully"
+msgstr "پروفایل با موفقیت آپدیت شد"
+
+#: apps/order/models.py:30
+msgid "description"
+msgstr "توضیحات"
+
+#: apps/order/models.py:40
+msgid "specialized fields"
+msgstr "رشته تخصصی"
+
+#: apps/order/models.py:46
+#, fuzzy
+#| msgid "languages"
+msgid "source language"
+msgstr "زبان‌ها"
+
+#: apps/order/models.py:77
 msgid "source and target language can't be the same"
 msgstr ""
 
-#: config/settings.py:128
-msgid "Persian"
+#: apps/order/views.py:26
+msgid "order successfuly created"
 msgstr ""
 
 #: config/settings.py:129
+msgid "Persian"
+msgstr ""
+
+#: config/settings.py:130
 msgid "English"
 msgstr ""
 
@@ -96,14 +114,13 @@ msgstr "هنوز حساب کاربری ندارید؟"
 
 #: templates/panel/index.html:17
 msgid "Home"
-msgstr "خانه"   
+msgstr "خانه"
 
 #: templates/panel/index.html:19
 msgid "Sign up"
 msgstr "ثبت نام"
 
-#: templates/panel/index.html:25
 #, fuzzy
-#| msgid "languages"
-msgid "Language"
-msgstr "زبان"
+#~| msgid "languages"
+#~ msgid "Language"
+#~ msgstr "زبان"

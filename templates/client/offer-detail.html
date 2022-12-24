@@ -1,0 +1,63 @@
+{% extends "panel/panel.html" %}
+{% block title %}Invoice Details{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            Invoice Details
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td> Description </td>
+                        <td> {{ object.order.description }} </td>
+                    </tr>
+                    <tr>
+                        <td> Translator </td>
+                        <td><a href="{{ object.translator }}"> {{ object.translator.user.email }}</a></td>
+                    </tr>
+                    <tr>
+                        <td> Deadline </td>
+                        <td> {{ object.order.deadline }} </td>
+                    </tr>
+                    <tr>
+                        <td> Specialized Field </td>
+                        <td> {{ object.order.specialized_field.name }} </td>
+                    </tr>
+                    <tr>
+                        <td> Edit Needed </td>
+                        <td> {% if object.order.edit_needed %} Yes {% else %} No {% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td> Source Language </td>
+                        <td> {{ object.order.source_language.name }} </td>
+                    </tr>
+                    <tr>
+                        <td> Target Language </td>
+                        <td> {{ object.order.target_language.name }} </td>
+                    </tr>
+                    <tr>
+                        <td> Price </td>
+                        <td> {{ object.price }} </td>
+                    </tr>
+                    <tr>
+                        <td>
+                           <form action="{% url 'new-invoice' %}" method="post">
+                            {% csrf_token%}
+                            {% for bank in banks %}
+                            <img src="{{ bank.icon.url  }}" width="50" height="60"/>
+                            <input class="form-input" type="radio" name="bank" value="{{ bank.id }}">{{bank.name}}</input>
+                            {% endfor %}
+                            <input type="hidden" name="offer" value="{{ object.pk }}"/>
+                            <input type="submit" class="btn btn-success" value="Pay"/>
+                           </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

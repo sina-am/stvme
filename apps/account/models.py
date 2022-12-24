@@ -108,6 +108,8 @@ class Translator(models.Model):
     min_time = models.PositiveSmallIntegerField(help_text='Minimum time per 5000 word in hour', null=True, blank=True)
     is_available = models.BooleanField(default=True, )
 
+    credit = models.IntegerField(default=0)
+    
     class Meta:
         db_table = 'translators'
         constraints = [
