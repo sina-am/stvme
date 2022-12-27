@@ -3,16 +3,13 @@
 {% block title %} {% translate "Login Page" %} {% endblock %}
 
 {% block content %}
-<div class="h-100 d-flex align-items-center justify-content-center" style="padding-top: 10%;">
-  <div class="card">
-    <div class="card-header">
-    {% translate "Login" %}
-    </div>
+<div class="d-flex align-items-center justify-content-center p-5">
+  <div class="card shadow  mb-5 bg-body rounded  s-card">
     <div class="card-body">
-      <form method="POST" action="{% url 'login' %}">
+      <form method="POST" class="d-flex align-items-center justify-content-center flex-column" action="{% url 'login' %}">
         {% csrf_token %}
         {{form}}
-        <button type="submit" class="btn btn-primary btn-block mb-4">
+        <button type="submit" class="btn btn-primary btn-block mb-4 s-form-button">
         {% translate "Log in" %}
         </button>
       </form> 

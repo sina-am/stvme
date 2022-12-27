@@ -4,18 +4,15 @@
 {% block content %}
 <!-- Jumbotron -->
 <div class="px-4 py-5 px-md-5 text-lg-start">
-    <div class="container">
+    <div class="container d-flex align-items-center justify-content-center">
       <div class="row gx-lg-5 align-items-center">      
         <div class="col-lg-6 mb-5 mb-lg-0">
-          <div class="card">
-            <div class="card-header">
-              Register
-            </div>
+          <div class="card s-card">  
             <div class="card-body py-5 px-md-5">
-              <form method="POST" action="{% url 'register' %}">
+              <form method="POST" action="{% url 'register' %}" class="d-flex align-items-center justify-content-center flex-column">
                 {% csrf_token %}
                 {{form}}
-                <button type="submit" class="btn btn-primary btn-block mb-4">
+                <button type="submit" class="btn btn-primary btn-block mb-4 s-form-button">
                 Sign up
                 </button>
               </form>

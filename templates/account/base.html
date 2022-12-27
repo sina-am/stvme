@@ -1,7 +1,44 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
     <head>
         {% include "components/head.html" %}
+        <style>
+        .s-form-alert {
+            margin-top: 5px;
+            width: 224px;
+            background-color: #e74c3c;
+        }
+        .s-card {
+            width: 400px;
+        }
+        .errorlist {
+            list-style: none;
+            color:blanchedalmond;
+        }
+        .s-form-button {
+            background-color: #fff;
+            transition: 0.2s ease-in;
+            border: solid 1px #27ae60;
+            color: #000;
+        }
+        .s-form-button:hover {
+            background-color: #27ae60;
+            border: solid 1px #fff;
+            color: #fff;
+        }
+        a {
+            text-decoration: none;
+            color: black;
+        }
+        a:hover {
+            color: #27ae60;
+        }
+        
+        body {
+            background-color: #f0f0f0;
+        }
+        </style>
     </head>
     <body>
         {% block content %}{% endblock %}

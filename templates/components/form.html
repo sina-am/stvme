@@ -1,11 +1,11 @@
 {% if errors %}
-<div class="alert alert-danger" role="alert">{{ errors }}</div>
+<div class="alert alert-danger s-form-alert" style="width: 560px;">{{ errors }}</div>
 {% endif %}
 {% if errors and not fields %}
-  <div class="alert alert-danger" role="alert">{% for field in hidden_fields %}{{ field }}{% endfor %}</div>
+  <div class="alert alert-danger s-form-alert" style="width: 560px;">{% for field in hidden_fields %}{{ field }}{% endfor %}</div>
 {% endif %}
 {% for field, errors in fields %}
-<div class="form-outline mb-4">
+<div class="form-outline mb-4 " >
   <div{% with classes=field.css_classes %}{% if classes %} class="{{classses}}"{% endif %}{% endwith %}>
     {% if field.use_fieldset %}
       <fieldset>
@@ -19,11 +19,12 @@
       </br>
     {% endif %}
     {% comment %} {% if field.help_text %}<div class="helptext">{{ field.help_text|safe }}</div>{% endif %} {% endcomment %}
-    {% if errors %}
-    <div class="alert alert-danger" role="alert">{{ errors }}</div>
-    {% endif %}
     {{ field }}
+     {% if errors %}
+      <div class="alert alert-danger s-form-alert">{{ errors }}</div>
+    {% endif %}
     {% if field.use_fieldset %}</fieldset>{% endif %}
+
     {% if forloop.last %}
       {% for field in hidden_fields %}{{ field }}{% endfor %}
     {% endif %}
